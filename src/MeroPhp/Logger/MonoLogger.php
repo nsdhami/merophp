@@ -1,9 +1,7 @@
 <?php
 namespace MeroPhp\Logger;
 
-use Monolog\Logger;
-
-class MonoLogHandler extends Logger implements LoggerInterface
+class MonoLogger //extends \Monolog\Logger implements LoggerInterface
 {	
 	private $nPriority;
 	private $oDebugBar;
@@ -77,12 +75,6 @@ class MonoLogHandler extends Logger implements LoggerInterface
 		$this->oDebugBar->exception($oEx);
 	}
 	
-	public function emergencyplus($sMessage, $aExtra = array())
-	{
-		$this->addRecord(parent::EMERGENCY, $sMessage, $aExtra);
-		ErrorHandler::emergency($sMessage);
-	}
-	
 	public function setDebugBar(DebugBar $oDebugBar)
 	{
 		$this->oDebugBar = $oDebugBar;
@@ -101,5 +93,11 @@ class MonoLogHandler extends Logger implements LoggerInterface
 	public function getDebugBar()
 	{
 		return $this->oDebugBar;
+	}
+	
+	public function emergencyplus($sMessage, $aExtra = array())
+	{
+		$this->addRecord(parent::EMERGENCY, $sMessage, $aExtra);
+		header("Location: $this->emergencyUrl");
 	}
 }

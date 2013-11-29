@@ -1,9 +1,7 @@
 <?php
 namespace MeroPhp\Logger;
 
-use Zend\Log\Logger;
-
-class ZendLogHandler extends Logger implements LoggerInterface
+class ZendLogger //extends \Zend\Log\Logger implements LoggerInterface
 {	
 	private $nPriority;
 	private $oDebugBar;
@@ -66,12 +64,6 @@ class ZendLogHandler extends Logger implements LoggerInterface
 		$this->oDebugBar->exception($oEx);
 	}
 	
-	public function emergencyplus($sMessage, $aExtra = array())
-	{
-		parent::log(self::EMERG, $sMessage, $aExtra);
-		ErrorHandler::emergency($sMessage);
-	}
-	
 	public function setDebugBar(DebugBar $oDebugBar)
 	{
 		$this->oDebugBar = $oDebugBar;
@@ -90,5 +82,11 @@ class ZendLogHandler extends Logger implements LoggerInterface
 	public function getDebugBar()
 	{
 		return $this->oDebugBar;
+	}
+	
+	public function emergencyplus($sMessage, $aExtra = array())
+	{
+		$this->addRecord(parent::EMERGENCY, $sMessage, $aExtra);
+		header("Location: $this->emergencyUrl");
 	}
 }
