@@ -196,12 +196,12 @@ abstract class AbstractLogger
         exit();
     }
     
-    protected function mail($sPriority, $sMessage)
+    protected function mail($message, $priority = 0)
     {
-        $sSubject = $this->mailSubject . ' - ' . $sPriority;
-        // mb_convert_encoding($this->sErrorSubject, "sjis", "utf-8");
-        // $sMessage = mb_convert_encoding($sMessage, "sjis", "utf-8");
-        return mail($this->mailTo, $sSubject, $sMessage);
+        $subject = $this->mailSubject . ' - ' . $priority;
+        $message = mb_convert_encoding($message, "utf-8", "utf-8");
+        $headers  = 'Content-type: text/plain; charset=utf-8' ."\r\n";
+        return mail($this->mailTo, $subject, $message, $headers);
     }
     
     public function setMail($mailTo, $mailSubject, $mailLevel)

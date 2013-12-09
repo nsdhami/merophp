@@ -35,7 +35,7 @@ class SimpleLogger extends AbstractLogger
         error_log("[$logLevel] $message");
         
         if($bSendMail){
-            $this->mail($logLevel, $message);
+            $this->mail($message, $logLevel);
         }
         return $message;
     }
