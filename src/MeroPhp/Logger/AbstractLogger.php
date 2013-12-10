@@ -59,11 +59,11 @@ abstract class AbstractLogger
     protected $mailLevel;
     protected $mailSubject;
     
-    protected $bIsCaughtByHandler;
+    protected $isCaughtByHandler;
     
     protected function __construct()
     {
-        $this->bIsCaughtByHandler = false;
+        $this->isCaughtByHandler = false;
         $this->logLevel = self::$LOG_LEVEL_MAPS[self::LEVEL_DEBUG];
         $this->mailLevel = self::$LOG_LEVEL_MAPS[self::LEVEL_WARNING];
     }
@@ -171,7 +171,7 @@ abstract class AbstractLogger
                     break;
             }
     
-            $this->bIsCaughtByHandler = true;
+            $this->isCaughtByHandler = true;
             $this->addRecord($sPriority, "ErrorHandler => $sErrstr (on $nErrline at $sErrfile)");
         });
     }
@@ -180,7 +180,7 @@ abstract class AbstractLogger
     {
         set_exception_handler(function (\Exception $oEx)
         {
-            $this->bIsCaughtByHandler = true;
+            $this->isCaughtByHandler = true;
     
             $nErrline = $oEx->getLine();
             $sErrfile = $oEx->getFile();
